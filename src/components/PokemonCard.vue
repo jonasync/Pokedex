@@ -1,17 +1,17 @@
 <template>
   <div class="item">
     <div class="picture">
-      <img class="card-img-top" :src="pokemon.image" alt="Card image cap">
+      <img class="card-img-top" :src="pokemon.sprites.front_default" alt="Card image cap">
       <span>ID / {{pokemon.id}}</span>
     </div>
     <div class="card-body">
       <h5 class="card-title"> {{ pokemon.name }} </h5>
       <ul>
-        <li class="tag" v-for="(tag, i) in pokemon.types" :key="i"> {{ tag.name }} </li>
+        <li class="tag" v-for="(tag, i) in pokemon.types" :key="i"> {{ tag.type.name }} </li>
       </ul>
-      <div class="evolution" v-if="pokemon.evolution">
+      <div class="evolution" v-if="pokemon.species.evolves_from_species">
         <p>Evoluciona de:</p>
-        <h2> {{ pokemon.evolution.name }} </h2>
+        <h2> {{ pokemon.species.evolves_from_species.name }} </h2>
       </div>
     </div>
   </div>
@@ -24,6 +24,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

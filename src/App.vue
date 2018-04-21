@@ -17,6 +17,7 @@
 
 <script>
 import PokemonCard from './components/PokemonCard'
+import getPokemons from './api'
 
 export default {
   name: 'app',
@@ -27,53 +28,37 @@ export default {
     return {
       msg: 'Pokedex',
       search_placeholder: 'Filtrar pokemons por nombre...',
-      pokemons: [
-        {
-          name: 'Bulbasaur',
-          image: 'http://lorempixel.com/48/48/people/1/',
-          id: 1,
-          types: [
-            {
-              name: 'poison'
-            },
-            {
-              name: 'grass'
-            },
-          ]
-        },
-        {
-          name: 'Ivysaur',
-          image: 'http://lorempixel.com/48/48/people/2/',
-          id: 1,
-          types: [
-            {
-              name: 'poison'
-            },
-            {
-              name: 'grass'
-            },
-          ],
-          evolution: {
-            name: 'Bulbasaur'
-          }
-        }
-      ]
+      pokemons: [],
+      next: null,
+      limit: 2
+    }
+  },
+  created() {
+    this.getData()
+  },
+  methods: {
+    getData: function(){
+      getPokemons( this.next, this.limit )
+      .then( request => {
+        this.pokemons = request.results
+        this.next = request.next
+      })
     }
   }
 }
 </script>
 
 <style lang="scss">
-
 body {
-  background-color: #fee445;
+  background: #fee445;
 }
 #app {
-  font-family: Helvetica, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  // margin: 2rem;
 }
 
 .container {
@@ -92,6 +77,7 @@ body {
 }
 
 .item {
+  // width: 33%;
   flex-grow: 1;
 }
 
