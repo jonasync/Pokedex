@@ -30,7 +30,8 @@ export default {
       search_placeholder: 'Filtrar pokemons por nombre...',
       pokemons: [],
       next: null,
-      limit: 2
+      limit: 5,
+      counter: 0
     }
   },
   created() {
@@ -40,8 +41,15 @@ export default {
     getData: function(){
       getPokemons( this.next, this.limit )
       .then( request => {
-        this.pokemons = request.results
-        this.next = request.next
+        request.results.forEach(element => {
+          this.pokemons.push(element)
+        });
+        
+        if(request.next && this.counter < 2){
+          this.counter++
+          this.next = request.next
+          this.getData()
+        }
       })
     }
   }
