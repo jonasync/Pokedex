@@ -4,35 +4,40 @@
       <div class="row">
         <input class="search" type="text" v-model="filterBy" :placeholder="search_placeholder">
       </div>
-
-      <div class="row grid">
-        <pokemon-card v-for="(pokemon, index) in pokemonFiltered" :pokemon="pokemon" :key="index"></pokemon-card>
+      <div :class="['row grid', {left}]">
+        <pokemon-card v-for="(pokemon, index) in pokemonFiltered" :pokemon="pokemon" :key="index"/>
       </div>
-
+      <loader v-if="loading"/>
     </section>
   </div>
 </template>
 
 <script>
 import PokemonCard from './components/PokemonCard'
+import Loader from './components/Loader'
 import getPokemons from './api'
 
 export default {
   name: 'app',
   components: {
-    PokemonCard
+    PokemonCard,
+    Loader
   },
   data () {
     return {
-      search_placeholder: 'Filtrar pokemons por nombre...',
-      pokemons: [],
+      filterBy: '',
+      loading: false,
       next: null,
-      limit: 5,
-      counter: 0,
-      filterBy: ''
+      pokemons: [],
+      search_placeholder: 'Filtrar pokemons por nombre...',
+
+      // This is for limit the API queries
+      limit: 3,     // Number of pokemon by query
+      counter: 1,   // Init queries counter
+      loops: 4,     // Number of queries to do
     }
   },
-  created() {
+  beforeMount() {
     this.getData()
   },
   computed: {
@@ -45,20 +50,26 @@ export default {
       }else{
         return this.pokemons
       }
+    },
+    left: function(){
+      return this.pokemonFiltered.length <= 2
     }
   },
   methods: {
     getData: function(){
+      this.loading = true
       getPokemons( this.next, this.limit )
       .then( request => {
         request.results.forEach(element => {
           this.pokemons.push(element)
         });
         
-        if(request.next && this.counter < 2){
+        if(request.next && this.counter < this.loops){
           this.counter++
           this.next = request.next
           this.getData()
+        }else{
+          this.loading = false
         }
       })
     }
@@ -67,6 +78,14 @@ export default {
 </script>
 
 <style lang="scss">
+
+// Enter/Leave Components Animations
+.fade-enter-active, .fade-leave-active {
+  transform: scale(0);
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 
 body {
   background: #fee445;
@@ -96,20 +115,35 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   position: relative;
-}
 
-.search {
-  border: 0px;
-  box-shadow: 0 0 30px #cab73c;
-  font-size: 1.2rem;
-  margin: 20px 0 10px;
-  padding: 1rem;
-  text-align: center;
-  width: 100%;
+  &.left {
+    justify-content: flex-start;
 
-  &::placeholder {
-    color: #bdbdbd;
-    opacity: 1;
+    .item {
+      margin-right: 50px;
+    }
+
   }
 }
+
+  .search {
+    border: 0px;
+    box-shadow: 0 0 30px #cab73c;
+    font-size: 1.2rem;
+    margin: 20px 0 10px;
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+
+    &::placeholder {
+      color: #bdbdbd;
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 750px) {
+    .grid {
+      justify-content: space-between;
+    }
+  }
 </style>

@@ -1,23 +1,25 @@
 <template>
-  <div class="item">
-    <div class="card-img">
-      <img class="picture front_default" :src="pokemon.sprites.front_default" 
-        :alt="pokemon.name">
-      <div class="id">ID / {{pokemon.id}}</div>
-    </div>
-    <div class="card-body">
-      <h2 class="card-title"> {{ pokemon.name }} </h2>
-      <ul>
-        <li class="tag" v-for="(tag, i) in pokemon.types" :key="i"> 
-          {{ tag.type.name }} 
-        </li>
-      </ul>
-      <div class="evolution" v-if="pokemon.species.evolves_from_species">
-        <p>Evoluciona de:</p>
-        <h3 class="h3"> {{ pokemon.species.evolves_from_species.name }} </h3>
+  <transition name="fade">
+    <div class="item">
+      <div class="card-img">
+        <img class="picture front_default" :src="pokemon.sprites.front_default" 
+          :alt="pokemon.name">
+        <div class="id">ID / {{pokemon.id}}</div>
+      </div>
+      <div class="card-body">
+        <h2 class="card-title"> {{ pokemon.name }} </h2>
+        <ul>
+          <li class="tag" v-for="(tag, i) in pokemon.types" :key="i"> 
+            {{ tag.type.name }} 
+          </li>
+        </ul>
+        <div class="evolution" v-if="pokemon.species.evolves_from_species">
+          <p>Evoluciona de:</p>
+          <h3 class="h3"> {{ pokemon.species.evolves_from_species.name }} </h3>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -39,6 +41,7 @@ $secondary-color: #795548;
     height: 270px;
     margin: 20px 0;
     width: 30%;
+    transition: all .3s ease;
 
     .card-img {
       align-content: center;
@@ -111,6 +114,11 @@ $secondary-color: #795548;
           font-weight: normal;
         }
       }
+    }
+  }
+  @media (max-width: 750px) {
+    .item {
+      width: 100%;
     }
   }
 </style>
