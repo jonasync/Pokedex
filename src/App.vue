@@ -2,11 +2,11 @@
   <div id="app">
     <section class="container">
       <div class="row">
-        <input class="search" type="text" :placeholder="search_placeholder">
+        <input class="search" type="text" v-model="filterBy" :placeholder="search_placeholder">
       </div>
 
       <div class="row grid">
-        <pokemon-card v-for="(pokemon, index) in pokemons" :pokemon="pokemon" :key="index"></pokemon-card>
+        <pokemon-card v-for="(pokemon, index) in pokemonFiltered" :pokemon="pokemon" :key="index"></pokemon-card>
       </div>
 
     </section>
@@ -28,11 +28,24 @@ export default {
       pokemons: [],
       next: null,
       limit: 5,
-      counter: 0
+      counter: 0,
+      filterBy: ''
     }
   },
   created() {
     this.getData()
+  },
+  computed: {
+    pokemonFiltered: function(){
+      if( this.filterBy != '' ){
+        return this.pokemons.filter( (item) => {
+          console.log(item, this.filterBy)
+          return item.name.toLowerCase().indexOf( this.filterBy.toLowerCase() ) > -1;
+        })
+      }else{
+        return this.pokemons
+      }
+    }
   },
   methods: {
     getData: function(){
