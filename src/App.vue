@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
-    <h1>{{ msg }} </h1>
     <section class="container">
       <div class="row">
         <input class="search" type="text" :placeholder="search_placeholder">
@@ -26,7 +24,6 @@ export default {
   },
   data () {
     return {
-      msg: 'Pokedex',
       search_placeholder: 'Filtrar pokemons por nombre...',
       pokemons: [],
       next: null,
@@ -57,60 +54,49 @@ export default {
 </script>
 
 <style lang="scss">
+
 body {
   background: #fee445;
+	border: 0;
+  margin: 0px;
+  padding: 0;
 }
 #app {
+  color: #2c3e50;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  // margin: 2rem;
 }
 
 .container {
-  width: 80%;
   margin: 0 auto;
+  width: 80%;
 }
 
 .row {
-  width: 100%;
   display: flex;
 }
 
 .grid {
   display: flex;
   flex-wrap: wrap;
-}
-
-.item {
-  // width: 33%;
-  flex-grow: 1;
+  justify-content: space-between;
+  position: relative;
 }
 
 .search {
-  font-size: 1rem;
-  width: 100%;
+  border: 0px;
+  box-shadow: 0 0 30px #cab73c;
+  font-size: 1.2rem;
+  margin: 20px 0 10px;
   padding: 1rem;
   text-align: center;
-}
+  width: 100%;
 
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+  &::placeholder {
+    color: #bdbdbd;
+    opacity: 1;
+  }
 }
 </style>
