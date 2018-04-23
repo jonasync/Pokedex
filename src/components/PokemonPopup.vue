@@ -1,6 +1,6 @@
 <template>
   <transition name="fade-popup">
-    <div class="item" v-if="pokemon != null" @click="$router.go(-1)">
+    <div class="popup item" v-if="pokemon != null" @click="$router.go(-1)">
       <div class="card-img">
         <img class="picture front_default" :src="pokemon.sprites.front_default" 
           :alt="pokemon.name">

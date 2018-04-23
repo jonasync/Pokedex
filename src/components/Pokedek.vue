@@ -39,7 +39,7 @@ export default {
       // This is for limit the API queries
       limit: 3,     // Number of pokemon by query
       counter: 1,   // Init queries counter
-      loops: 2,     // Number of queries to do
+      loops: 10,     // Number of queries to do
     }
   },
   beforeMount() {
@@ -49,7 +49,6 @@ export default {
     pokemonFiltered: function(){
       if( this.filterBy != '' ){
         return this.pokemons.filter( (item) => {
-          console.log(item, this.filterBy)
           return item.name.toLowerCase().indexOf( this.filterBy.toLowerCase() ) > -1;
         })
       }else{
@@ -89,13 +88,13 @@ export default {
 <style lang="scss">
 
 // Enter/Leave Components Animations
-.fade-enter-active, .fade-leave-active {
+.grow-enter-active, .grow-leave-active {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: scale(0);
 }
 .fade-popup-enter-active, .fade-popup-leave-active {
   opacity: 0;
-  transform: scale(0, 0) translateY(-500px);
+  transform: translateX(50px);
 }
 
 body {

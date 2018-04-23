@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade">
+  <transition name="grow">
     <div class="item" @click="launchPopup">
       <div class="card-img">
         <img class="picture front_default" :src="pokemon.sprites.front_default" 
@@ -124,7 +124,13 @@ $secondary-color: #795548;
       }
     }
   }
-  @media (max-width: 750px) {
+  @media (max-width: 900px) {
+    .item {
+      width: 48%;
+    }
+  }
+
+  @media (max-width: 600px) {
     .item {
       width: 100%;
     }
