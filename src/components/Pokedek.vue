@@ -36,13 +36,14 @@ export default {
       pokemonModal: null,
       search_placeholder: 'Filtrar pokemons por nombre...',
 
-      // This is for limit the API queries
-      limit: 3,     // Number of pokemon by query
-      counter: 1,   // Init queries counter
-      loops: 10,     // Number of queries to do
+      // Esto es para limitar el numero de peticiones que se hace al API.
+      limit: 2,     // Numero de pokemos por petición
+      counter: 1,   // Contador
+      loops: 15     // Numero de peticiones a realizar
     }
   },
   beforeMount() {
+    console.info(`Mostrando solo ${this.limit*this.loops} pokemons. Tardarán en aparecer todas algo más de 70 segundos.`)
     this.getData()
   },
   computed: {
