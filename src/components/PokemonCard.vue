@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="item">
+    <div class="item" @click="launchPopup">
       <div class="card-img">
         <img class="picture front_default" :src="pokemon.sprites.front_default" 
           :alt="pokemon.name">
@@ -23,13 +23,20 @@
 </template>
 
 <script>
+import router from '../router'
 export default {
   name: 'pokemon-card',
-  props: ['pokemon']
+  props: ['pokemon'],
+  methods: {
+    launchPopup: function(){
+      this.$emit('eventSetModal', this.pokemon)
+      router.push({ name: 'pokemon-popup', params: { id: this.pokemon.id }})
+    }
+  }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 $primary-color: #000000;
 $secondary-color: #795548;
@@ -37,6 +44,7 @@ $secondary-color: #795548;
   .item {
     background-color: #fff;
     box-shadow: 0 0 30px #cab73c;
+    cursor: pointer;
     float: left;
     height: 270px;
     margin: 20px 0;
