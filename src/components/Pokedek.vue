@@ -127,7 +127,7 @@ body {
 
 #app::after {
   left: inherit;
-  right: -0px;
+  right: -50px;
 }
 
 .container {
