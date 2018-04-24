@@ -112,9 +112,45 @@ body {
   text-align: center;
 }
 
+#app::before, #app::after {
+  content: "";
+  background-color: black;
+  display: block;
+  height: 100px;
+  left: -50px;
+  width: 100px;
+  z-index: -1;
+  position: fixed;
+  top: -50px;
+  transform: rotate(45deg);
+}
+
+#app::after {
+  left: inherit;
+  right: -0px;
+}
+
 .container {
   margin: 0 auto;
   width: 80%;
+}
+
+.container::before,
+.container::after {
+  content: "";
+  background-color: red;
+  border-radius: 50%;
+  bottom: -60px;
+  display: block;
+  height: 120px;
+  left: -60px;
+  position: fixed;
+  width: 120px;
+  z-index: -1;
+}
+.container::after {
+  left: inherit;
+  right: -60px;
 }
 
 .row {
